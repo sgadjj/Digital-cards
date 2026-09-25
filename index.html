@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101827">
+  <title>بطاقتي | سوق البطاقات الرقمية</title>
+  <style>
+    :root { --bg: #f5f7fb; --ink: #152239; --muted: #6e7c91; --primary: #6856eb; --line: #e6eaf2; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: Tahoma, Arial, sans-serif; line-height: 1.7; }
+    button, input, select { font: inherit; }
+    button, a, select { -webkit-tap-highlight-color: transparent; }
+    button { cursor: pointer; }
+    button:disabled { opacity: .5; cursor: not-allowed; }
+    a { color: inherit; text-decoration: none; }
+    :focus-visible { outline: 3px solid #a99cff; outline-offset: 4px; }
+    .container { width: min(1180px, 92%); margin: auto; }
+    header { background: #fff; border-bottom: 1px solid var(--line); }
+    .nav { min-height: 86px; display: flex; align-items: center; gap: 32px; }
+    .brand { font-size: 26px; font-weight: bold; display: flex; align-items: center; gap: 10px; }
+    .brand-icon { width: 39px; height: 39px; background: var(--primary); color: white; border-radius: 12px; display: grid; place-items: center; transform: rotate(-8deg); }
+    nav { display: flex; gap: 26px; font-size: 14px; color: var(--muted); }
+    nav a:first-child { color: var(--primary); }
+    .nav-action { margin-inline-start: auto; }
+    .button { border: 0; border-radius: 10px; padding: 11px 21px; background: var(--primary); color: #fff; font-weight: bold; transition: background .2s, transform .2s; }
+    .button:hover { background: #5442d4; transform: translateY(-1px); }
+    .button.secondary { background: #eeebff; color: #5946d2; }
+    .hero { margin-top: 30px; border-radius: 24px; padding: 48px; background: #101827; color: white; display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; align-items: center; overflow: hidden; position: relative; }
+    .eyebrow { display: inline-flex; gap: 8px; align-items: center; color: #bfb6ff; font-size: 13px; }
+    .dot { height: 7px; width: 7px; border-radius: 50%; background: #a794ff; }
+    h1 { font-size: clamp(28px, 3.7vw, 45px); line-height: 1.45; margin: 16px 0; letter-spacing: -1px; }
+    h1 span { color: #ac9cff; }
+    .hero p { color: #aab5c7; max-width: 430px; font-size: 14px; margin-bottom: 25px; }
+    .hero-links { display: flex; align-items: center; gap: 22px; font-size: 13px; }
+    .hero-art { min-height: 260px; display: grid; place-items: center; position: relative; }
+    .glow { position: absolute; width: 240px; height: 240px; border-radius: 50%; background: #6753eb; filter: blur(80px); opacity: .45; }
+    .digital-card { width: min(290px, 100%); height: 177px; border-radius: 19px; padding: 25px; position: relative; background: linear-gradient(125deg, #9478fa, #5440bc); border: 1px solid #c1adff88; box-shadow: 0 20px 50px #0005; transform: rotate(-10deg); display: flex; flex-direction: column; justify-content: space-between; }
+    .digital-card::before { content: ''; position: absolute; inset: 0; border-radius: inherit; border: 1px solid #ffffff22; transform: rotate(19deg); background: #ffffff09; z-index: -1; }
+    .digital-card strong { font-size: 26px; letter-spacing: 2px; }
+    .card-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
+    .floating-label { position: absolute; bottom: 0; background: #fff; color: var(--ink); border-radius: 12px; padding: 10px 18px; font-size: 12px; box-shadow: 0 8px 25px #0002; }
+    .floating-label span { color: #159b75; margin-inline-end: 8px; }
+    .benefits { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin: 24px 0 42px; }
+    .benefit { display: flex; align-items: center; gap: 13px; padding: 12px 20px; }
+    .benefit-icon { background: #ece9ff; color: var(--primary); width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; font-size: 20px; flex-shrink: 0; }
+    .benefit strong { font-size: 13px; display: block; }
+    .benefit small { color: var(--muted); font-size: 11px; }
+    .section-head { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 22px; }
+    h2 { margin: 0; font-size: 24px; }
+    .section-head p { color: var(--muted); font-size: 13px; margin: 5px 0 0; }
+    .search { width: 260px; background: white; border: 1px solid var(--line); padding: 11px 15px; border-radius: 10px; }
+    .filters { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 25px; }
+    .filter { padding: 8px 19px; background: #fff; border: 1px solid var(--line); border-radius: 9px; color: var(--muted); font-size: 13px; }
+    .filter.active { background: var(--ink); border-color: var(--ink); color: #fff; }
+    .products { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .product { background: #fff; border: 1px solid var(--line); border-radius: 17px; padding: 15px; transition: box-shadow .2s; }
+    .product:hover { box-shadow: 0 8px 30px #23325d0c; }
+    .product-art { height: 156px; border-radius: 11px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; color: #fff; }
+    .product-art::after { content: ''; width: 180px; height: 180px; border: 30px solid #ffffff09; position: absolute; border-radius: 50%; left: -50px; top: -80px; }
+    .product-art strong { font-family: Arial, sans-serif; font-size: 30px; letter-spacing: -1px; }
+    .product-art small { position: absolute; bottom: 13px; left: 15px; font-size: 10px; opacity: .7; letter-spacing: 2px; }
+    .badge { position: absolute; top: 12px; right: 12px; background: #ffffff24; padding: 2px 9px; border-radius: 5px; font-size: 10px; }
+    .product h3 { font-size: 16px; margin: 15px 0 3px; }
+    .description { font-size: 11px; color: var(--muted); margin: 0 0 14px; }
+    .field-label { display: block; font-size: 11px; color: var(--muted); margin-bottom: 5px; }
+    .denomination { width: 100%; border: 1px solid var(--line); border-radius: 8px; padding: 8px; background: #fafbfe; color: var(--ink); font-size: 12px; }
+    .purchase-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 16px 0; }
+    .price { font-weight: bold; font-size: 20px; color: var(--primary); }
+    .price small { font-size: 10px; font-weight: normal; }
+    .quantity { display: flex; align-items: center; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; direction: ltr; }
+    .quantity button { border: 0; background: #f7f8fc; width: 29px; height: 32px; color: var(--ink); }
+    .quantity input { width: 37px; height: 32px; border: 0; text-align: center; font-size: 12px; appearance: textfield; }
+    .quantity input::-webkit-inner-spin-button { appearance: none; }
+    .buy { width: 100%; font-size: 12px; padding: 10px; }
+    .empty { color: var(--muted); padding: 30px; text-align: center; grid-column: 1 / -1; }
+    .sell-banner { background: #eeebff; border: 1px solid #dfd9ff; border-radius: 18px; padding: 30px; display: flex; align-items: center; justify-content: space-between; gap: 20px; margin: 38px 0; }
+    .sell-banner h2 { font-size: 21px; }
+    .sell-banner p { font-size: 13px; color: #7b719e; margin: 7px 0 0; }
+    .orders { padding-bottom: 35px; }
+    .order-item { background: white; border: 1px solid var(--line); border-radius: 12px; padding: 15px 20px; display: flex; justify-content: space-between; gap: 12px; margin-top: 12px; font-size: 13px; flex-wrap: wrap; }
+    .order-item small { display: block; color: var(--muted); }
+    .status { color: #7460c4; font-size: 11px; }
+    footer { padding: 24px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 15px; flex-wrap: wrap; }
+    dialog { width: min(460px, 92%); border: 0; border-radius: 20px; padding: 28px; color: var(--ink); box-shadow: 0 25px 100px #0003; }
+    dialog::backdrop { background: #101827aa; backdrop-filter: blur(4px); }
+    .dialog-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+    .dialog-head h2 { font-size: 21px; }
+    .close { border: 0; background: #f1f3f8; width: 32px; height: 32px; border-radius: 50%; font-size: 20px; }
+    .notice { background: #f5f3ff; border-radius: 9px; padding: 12px; font-size: 12px; color: #74658f; }
+    .form-field { margin: 15px 0; }
+    .form-field label { display: block; font-size: 12px; margin-bottom: 6px; }
+    .form-field input, .form-field select { width: 100%; border: 1px solid #dce1ec; border-radius: 8px; padding: 10px; background: white; }
+    .total { display: flex; justify-content: space-between; margin: 18px 0; font-weight: bold; }
+    .full { width: 100%; }
+    .toast { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); background: #16263c; color: white; padding: 13px 24px; border-radius: 12px; box-shadow: 0 8px 30px #0002; font-size: 13px; z-index: 5; width: max-content; max-width: 90%; }
+    [hidden] { display: none !important; }
+    @media (max-width: 850px) {
+      .products { grid-template-columns: repeat(2, 1fr); }
+      .hero { padding: 32px; }
+      .benefit { padding: 8px 0; }
+      nav { gap: 15px; }
+    }
+    @media (max-width: 580px) {
+      .nav { gap: 12px; min-height: 75px; flex-wrap: wrap; padding: 15px 0; }
+      .brand { font-size: 22px; }
+      nav { order: 3; width: 100%; justify-content: center; }
+      .nav-action { font-size: 12px; padding: 9px 15px; }
+      .hero { grid-template-columns: 1fr; padding: 28px; margin-top: 20px; }
+      .hero-art { min-height: 220px; }
+      .benefits { gap: 10px; margin-bottom: 28px; }
+      .benefit { flex-direction: column; text-align: center; gap: 8px; }
+      .benefit strong { font-size: 11px; }
+      .benefit small { font-size: 9px; }
+      .section-head { align-items: stretch; flex-direction: column; }
+      .search { width: 100%; }
+      .products { grid-template-columns: 1fr; }
+      .product-art { height: 170px; }
+      .sell-banner { padding: 23px; align-items: flex-start; flex-direction: column; }
+      .filter { padding: 7px 12px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#" aria-label="بطاقتي، الرئيسية"><span class="brand-icon">▰</span> بطاقتي<span style="color:var(--primary)">.</span></a>
+      <nav aria-label="القائمة الرئيسية"><a href="#store">تصفح البطاقات</a><a href="#sell">بيع بطاقتك</a><a href="#orders">طلباتي</a></nav>
+      <button class="button secondary nav-action" id="sellTop">+ بيع بطاقة</button>
+    </div>
+  </header>
+  <main class="container">
+    <section class="hero">
+      <div>
+        <div class="eyebrow"><span class="dot"></span> عالمك الرقمي يبدأ ببطاقة</div>
+        <h1>كل بطاقاتك المفضلة،<br><span>في مكان واحد.</span></h1>
+        <p>للألعاب، الترفيه والتسوق. اختر بطاقتك، حدد الفئة والكمية، وأنشئ طلبك بكل سهولة.</p>
+        <div class="hero-links"><a class="button" href="#store">تسوق البطاقات ←</a><a href="#sell">عندك بطاقة للبيع؟</a></div>
+      </div>
+      <div class="hero-art" aria-hidden="true"><div class="glow"></div><div class="digital-card"><span>بطاقتي / DIGITAL</span><strong>GIFT CARD</strong><div class="card-bottom"><span>عالم من الخيارات</span><span>✦ ✦</span></div></div><div class="floating-label"><span>✓</span> بطاقات تناسب كل اهتماماتك</div></div>
+    </section>
+    <div class="benefits">
+      <div class="benefit"><span class="benefit-icon">✦</span><div><strong>خيارات متنوعة</strong><small>5 أقسام لبطاقاتك المفضلة</small></div></div>
+      <div class="benefit"><span class="benefit-icon">＋</span><div><strong>على قد احتياجك</strong><small>اختر القيمة والكمية المناسبة</small></div></div>
+      <div class="benefit"><span class="benefit-icon">↔</span><div><strong>بيع وشراء بسهولة</strong><small>أنشئ طلبك بخطوات بسيطة</small></div></div>
+    </div>
+    <section id="store" aria-labelledby="storeTitle">
+      <div class="section-head"><div><h2 id="storeTitle">اكتشف البطاقات</h2><p>اختيارات كثيرة، وتجربة أبسط.</p></div><input class="search" id="search" type="search" placeholder="ابحث عن بطاقتك المفضلة…" aria-label="البحث عن بطاقة"></div>
+      <div class="filters" id="filters" aria-label="تصنيف البطاقات"></div>
+      <div class="products" id="products"></div>
+    </section>
+    <section class="sell-banner" id="sell"><div><h2>بطاقتك الزائدة، فرصة جديدة ✦</h2><p>أضف بيانات بطاقتك وسعرها، وسجل طلب عرضها للبيع.</p></div><button class="button" id="sellBanner">اعرض بطاقتك للبيع ←</button></section>
+    <section class="orders" id="orders" aria-labelledby="ordersTitle"><div class="section-head"><div><h2 id="ordersTitle">طلباتي</h2><p>طلباتك التجريبية المحفوظة على هذا الجهاز.</p></div></div><div id="orderList"></div></section>
+  </main>
+  <footer><div class="container footer-inner"><span>© <span id="year"></span> بطاقتي — سوق البطاقات الرقمية</span><span>نسخة تجريبية · لا يتم تحصيل أموال أو تسليم بطاقات فعلية</span></div></footer>
+  <dialog id="buyDialog" aria-labelledby="buyTitle">
+    <div class="dialog-head"><h2 id="buyTitle">مراجعة طلب الشراء</h2><button class="close" data-close aria-label="إغلاق">×</button></div>
+    <form id="buyForm">
+      <p id="buyDetails"></p><div class="notice">هذا طلب تجريبي محفوظ محليًا، وليس عملية دفع. لن يتم إرسال أكواد أو تنفيذ شراء فعلي.</div>
+      <div class="form-field"><label for="buyerEmail">البريد الإلكتروني</label><input id="buyerEmail" type="email" autocomplete="email" placeholder="name@example.com" required maxlength="160"></div>
+      <div class="total"><span>الإجمالي</span><span id="buyTotal"></span></div><button class="button full" type="submit">تأكيد الطلب التجريبي</button>
+    </form>
+  </dialog>
+  <dialog id="sellDialog" aria-labelledby="sellTitle">
+    <div class="dialog-head"><h2 id="sellTitle">اعرض بطاقتك للبيع</h2><button class="close" data-close aria-label="إغلاق">×</button></div>
+    <form id="sellForm">
+      <div class="notice">سجّل طلب بيع تجريبي فقط؛ لن يُنشر للعامة. لا تدخل كود البطاقة السري أو بيانات الدفع.</div>
+      <div class="form-field"><label for="sellProduct">نوع البطاقة</label><select id="sellProduct" required></select></div>
+      <div class="form-field"><label for="sellValue">قيمة البطاقة</label><select id="sellValue" required></select></div>
+      <div class="form-field"><label for="sellQuantity">الكمية (1–99)</label><input id="sellQuantity" type="number" min="1" max="99" step="1" value="1" required></div>
+      <div class="form-field"><label for="sellPrice">سعر بيع البطاقة الواحدة (ر.س)</label><input id="sellPrice" type="number" min="1" max="10000" step="0.01" placeholder="مثال: 90" required></div>
+      <button class="button full" type="submit">تسجيل طلب البيع</button>
+    </form>
+  </dialog>
+  <div class="toast" id="toast" role="status" hidden></div>
+  <script>
+    const catalog = [
+      { id: 'ps', name: 'بطاقة بلايستيشن', brand: 'PlayStation', category: 'ألعاب', color: 'linear-gradient(120deg, #123aa4, #0877dd)', values: [10, 25, 50, 100], currency: 'دولار', rate: 3.95, region: 'الحساب الأمريكي' },
+      { id: 'apple', name: 'بطاقة آبل', brand: 'Apple Gift Card', category: 'تطبيقات', color: 'linear-gradient(120deg, #333a49, #687386)', values: [10, 25, 50, 100], currency: 'دولار', rate: 3.9, region: 'الحساب الأمريكي' },
+      { id: 'netflix', name: 'بطاقة نتفليكس', brand: 'NETFLIX', category: 'ترفيه', color: 'linear-gradient(120deg, #250c14, #812335)', values: [100, 200, 300], currency: 'ر.س', rate: 1.05, region: 'الحساب السعودي' },
+      { id: 'amazon', name: 'بطاقة أمازون', brand: 'amazon', category: 'تسوق', color: 'linear-gradient(120deg, #253143, #4b6179)', values: [50, 100, 200, 500], currency: 'ر.س', rate: 1.04, region: 'متجر السعودية' },
+      { id: 'stc', name: 'بطاقة شحن سوا', brand: 'stc / sawa', category: 'اتصالات', color: 'linear-gradient(120deg, #632bb4, #a43acb)', values: [20, 50, 100, 200], currency: 'ر.س', rate: 1.15, region: 'السعودية · السعر يشمل الضريبة' }
+    ];
+    const $ = id => document.getElementById(id);
+    const money = value => new Intl.NumberFormat('ar-SA', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value) + ' ر.س';
+    const state = Object.fromEntries(catalog.map(p => [p.id, { value: p.values[0], quantity: 1 }]));
+    let category = 'الكل';
+    let pending = null;
+    let orders = [];
+    let toastTimer;
+    try {
+      const stored = JSON.parse(localStorage.getItem('bitaqati-orders') || '[]');
+      if (Array.isArray(stored)) orders = stored.filter(o => o && typeof o.title === 'string' && Number.isFinite(o.total) && typeof o.date === 'string' && typeof o.id === 'string' && ['buy', 'sell'].includes(o.type)).slice(0, 100);
+    } catch (_) {}
+    function notify(message) {
+      $('toast').textContent = message;
+      $('toast').hidden = false;
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => { $('toast').hidden = true; }, 4500);
+    }
+    function renderFilters() {
+      $('filters').innerHTML = '';
+      ['الكل', 'ألعاب', 'تطبيقات', 'ترفيه', 'تسوق', 'اتصالات'].forEach(label => {
+        const button = document.createElement('button');
+        button.className = 'filter' + (category === label ? ' active' : '');
+        button.textContent = label;
+        button.setAttribute('aria-pressed', category === label);
+        button.onclick = () => { category = label; renderFilters(); renderProducts(); };
+        $('filters').append(button);
+      });
+    }
+    function renderProducts() {
+      const query = $('search').value.trim().toLowerCase();
+      const visible = catalog.filter(p => (category === 'الكل' || p.category === category) && (p.name + ' ' + p.brand).toLowerCase().includes(query));
+      $('products').innerHTML = '';
+      visible.forEach(p => {
+        const s = state[p.id];
+        const article = document.createElement('article');
+        article.className = 'product';
+        article.innerHTML = `<div class="product-art" style="background:${p.color}"><span class="badge">${p.category}</span><strong dir="ltr">${p.brand}</strong><small>DIGITAL CARD</small></div><h3>${p.name}</h3><p class="description">${p.region} · بطاقة رقمية</p><label class="field-label" for="value-${p.id}">اختر قيمة البطاقة</label><select class="denomination" id="value-${p.id}">${p.values.map(v => `<option value="${v}" ${v === s.value ? 'selected' : ''}>${v} ${p.currency}</option>`).join('')}</select><div class="purchase-row"><div class="price"><span class="amount"></span><small> / الإجمالي</small></div><div class="quantity"><button type="button" class="minus" aria-label="تقليل كمية ${p.name}">−</button><input type="number" min="1" max="99" step="1" value="${s.quantity}" aria-label="كمية ${p.name}"><button type="button" class="plus" aria-label="زيادة كمية ${p.name}">+</button></div></div><button class="button buy">شراء البطاقة ←</button>`;
+        const input = article.querySelector('input');
+        function update() {
+          article.querySelector('.amount').textContent = money(Math.round(s.value * p.rate * 100) / 100 * s.quantity);
+          article.querySelector('.minus').disabled = s.quantity <= 1;
+          article.querySelector('.plus').disabled = s.quantity >= 99;
+          input.value = s.quantity;
+        }
+        article.querySelector('select').onchange = e => { s.value = Number(e.target.value); update(); };
+        input.onchange = () => { s.quantity = Math.max(1, Math.min(99, Math.floor(Number(input.value) || 1))); update(); };
+        article.querySelector('.minus').onclick = () => { s.quantity = Math.max(1, s.quantity - 1); update(); };
+        article.querySelector('.plus').onclick = () => { s.quantity = Math.min(99, s.quantity + 1); update(); };
+        article.querySelector('.buy').onclick = () => {
+          pending = { title: `${p.name} — ${s.value} ${p.currency} × ${s.quantity}`, total: Math.round(s.value * p.rate * 100) / 100 * s.quantity, type: 'buy' };
+          $('buyDetails').textContent = pending.title + ' · ' + p.region;
+          $('buyTotal').textContent = money(pending.total);
+          $('buyDialog').showModal();
+        };
+        update();
+        $('products').append(article);
+      });
+      if (!visible.length) $('products').innerHTML = '<p class="empty">لا توجد بطاقات تطابق البحث. جرّب اسمًا آخر أو اختر الكل.</p>';
+    }
+    function renderOrders() {
+      $('orderList').innerHTML = '';
+      if (!orders.length) {
+        $('orderList').innerHTML = '<div class="empty">ليس لديك طلبات بعد. اختر بطاقة وابدأ طلبك الأول.</div>';
+        return;
+      }
+      orders.forEach(order => {
+        const item = document.createElement('div');
+        item.className = 'order-item';
+        const details = document.createElement('div');
+        const title = document.createElement('strong');
+        title.textContent = order.title;
+        const meta = document.createElement('small');
+        meta.textContent = `${order.id} · ${order.date}`;
+        details.append(title, meta);
+        const info = document.createElement('div');
+        const price = document.createElement('strong');
+        price.textContent = money(order.total);
+        const status = document.createElement('small');
+        status.className = 'status';
+        status.textContent = order.type === 'buy' ? 'طلب شراء تجريبي · غير مدفوع' : 'طلب بيع تجريبي · غير منشور';
+        info.append(price, status);
+        item.append(details, info);
+        $('orderList').append(item);
+      });
+    }
+    function saveOrder(order) {
+      orders.unshift({ ...order, id: 'BT-' + Date.now().toString(36).toUpperCase(), date: new Date().toLocaleString('ar-SA') });
+      orders = orders.slice(0, 100);
+      let saved = true;
+      try { localStorage.setItem('bitaqati-orders', JSON.stringify(orders)); } catch (_) { saved = false; }
+      renderOrders();
+      notify(saved ? 'تم تسجيل طلبك التجريبي. يمكنك مراجعته في طلباتي.' : 'تم تسجيل الطلب لهذه الجلسة فقط؛ تعذر الحفظ على الجهاز.');
+    }
+    $('buyForm').onsubmit = e => {
+      e.preventDefault();
+      if (!pending) return;
+      saveOrder(pending);
+      pending = null;
+      $('buyDialog').close();
+      $('buyForm').reset();
+    };
+    catalog.forEach(p => {
+      const option = document.createElement('option');
+      option.value = p.id;
+      option.textContent = p.name + ' — ' + p.region;
+      $('sellProduct').append(option);
+    });
+    function updateSellValues() {
+      const p = catalog.find(p => p.id === $('sellProduct').value);
+      $('sellValue').innerHTML = p.values.map(v => `<option value="${v}">${v} ${p.currency}</option>`).join('');
+    }
+    $('sellProduct').onchange = updateSellValues;
+    function openSell() { $('sellDialog').showModal(); }
+    $('sellTop').onclick = openSell;
+    $('sellBanner').onclick = openSell;
+    $('sellForm').onsubmit = e => {
+      e.preventDefault();
+      const p = catalog.find(p => p.id === $('sellProduct').value);
+      const quantity = Number($('sellQuantity').value);
+      const price = Number($('sellPrice').value);
+      if (!Number.isInteger(quantity) || quantity < 1 || quantity > 99 || !Number.isFinite(price) || price < 1 || price > 10000) return;
+      saveOrder({ type: 'sell', title: `${p.name} — ${$('sellValue').value} ${p.currency} × ${quantity}`, total: Math.round(price * 100) * quantity / 100 });
+      $('sellDialog').close();
+      $('sellForm').reset();
+      updateSellValues();
+    };
+    document.querySelectorAll('[data-close]').forEach(button => { button.onclick = () => button.closest('dialog').close(); });
+    $('search').oninput = renderProducts;
+    $('year').textContent = new Date().getFullYear();
+    updateSellValues();
+    renderFilters();
+    renderProducts();
+    renderOrders();
+  </script>
+</body>
+</html>
